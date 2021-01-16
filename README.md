@@ -23,7 +23,7 @@
 |    Column    |    Type    |   Options                      |
 | ------------ | ---------- | ------------------------------ |
 |     title    | string     | null: false                    |
-|    content   | string     | null: false                    |
+|    content   | text       | null: false                    |
 |  category_id | integer    | null: false                    |
 |   status_id  | integer    | null: false                    |
 |   place_id   | integer    | null: false                    |
@@ -46,7 +46,7 @@
 ### Association
 
 - belongs_to :user
-- has_one :item
+- belongs_to :item
 - has_one :address
 
 ## addresses テーブル
@@ -57,9 +57,10 @@
 |     place_id    | integer    | null: false                    |
 |       city      | string     | null: false                    |
 |     address     | string     | null: false                    |
-|   phone_number  | integer    | null: false                    |
+|     building    | string     |                                |
+|   phone_number  | string     | null: false                    |
 |      order      | references | null: false, foreign_key: true |
 
 ### Association
 
-- has_one :order
+- belongs_to :order
