@@ -26,6 +26,7 @@
 |    content   | text       | null: false                    |
 |  category_id | integer    | null: false                    |
 |   status_id  | integer    | null: false                    |
+|  delivery_id | integer    | null: false                    |
 |   place_id   | integer    | null: false                    |
 | duration_id  | integer    | null: false                    |
 |     price    | integer    | null: false                    |
