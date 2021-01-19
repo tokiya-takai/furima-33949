@@ -76,6 +76,33 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price is not a number")
       end
+
+      #collection_selectが1のとき(--)は出品できない
+      it "category_idが1の場合出品できない" do
+        @item.category_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Category must be other than 1")
+      end
+      it "status_idが1の場合出品できない" do
+        @item.status_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Status must be other than 1")
+      end
+      it "delivery_idが1の場合出品できない" do
+        @item.delivery_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Delivery must be other than 1")
+      end
+      it "place_idが1の場合出品できない" do
+        @item.place_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Place must be other than 1")
+      end
+      it "duration_idが1の場合出品できない" do
+        @item.duration_id = 1
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Duration must be other than 1")
+      end
     end
   end
 end

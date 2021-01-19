@@ -11,8 +11,7 @@ class Item < ApplicationRecord
   
   #販売価格は300円以上9999999以下であり、半角数値のみであること
   VALID_PRICE_REGEX = /\A[0-9]+\z/
-  validates :price, numericality: { greater_than_or_equal_to: 300}, allow_blank: true
-  validates :price, numericality: { less_than_or_equal_to: 9999999}, allow_blank: true
+  validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999}, allow_blank: true
   validates :price, format: { with: VALID_PRICE_REGEX }, allow_blank: true
 
   with_options presence: true do
