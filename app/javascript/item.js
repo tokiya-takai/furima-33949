@@ -7,7 +7,6 @@ function item() {
   let tax = 0.1;
 
   itemPrice.addEventListener('change', () => {
-    console.log(itemPrice.value);
     let price = itemPrice.value;
     addTax = Math.floor(price * tax);
     addTaxPrice.innerHTML = addTax;
