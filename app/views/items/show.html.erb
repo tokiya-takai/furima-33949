@@ -29,7 +29,7 @@
       <% else %>
         <%# 後に売却済みの場合は表示しない処理を追加%>
         <% if @item.user_id != current_user.id %>
-          <%= link_to '購入画面に進む', "#" ,class:"item-red-btn"%>
+          <%= link_to '購入画面に進む', item_orders_path(@item.id),class:"item-red-btn"%>
         <% end %>
       <% end %>
     <% end %>
