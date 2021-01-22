@@ -1,4 +1,4 @@
-class Buy
+class ItemOrder
   include ActiveModel::Model
   attr_accessor :user_id, :item_id, :postal_code, :place_id, :city, :address, :building, :phone_number, :order_id, :token
   

@@ -1,39 +1,47 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
   before_action :check_sold_out
 
   def index
-    @order = Order.new(order_params)
-    if @order.item_id == current_user.id
+    if @item.id == current_user.id
       redirect_to root_path
     end
-    @buy = Buy.new
+    @item_order = ItemOrder.new
   end
 
   def create
-    binding.pry
-    @buy = Buy.new(buy_params)
-    if @buy.valid?
-      @buy.save
+    @item_order = ItemOrder.new(item_order_params)
+    if @item_order.valid?
+      Payjp.api_key = ""
+      Payjp::Charge.create(
+        amount: order_params[:price], #商品の値段
+        card: order_params[:token], #カードトークン
+        currency: 'jpy'             #通貨の種類(日本円)
+      )
+      @item_order.save
       redirect_to root_path
     else
-      @order = Order.new(order_params)
       render action: :index
     end
   end
 
   private
+  def set_item
+    @item= Item.find(params[:item_id])
+  end
+
   def order_params
     params.permit(:item_id).merge(user_id: current_user.id)
   end
 
-  def buy_params
-    params.require(:buy).permit(:postal_code,:place_id,:city,:address,:building,:phone_number).merge(user_id: current_user.id, item_id: params[:item_id],token: params[:token])
+  def item_order_params
+    params.require(:item_order).permit(:postal_code,:place_id,:city,:address,:building,:phone_number).merge(user_id: current_user.id, item_id: params[:item_id],token: params[:token])
   end
 
   def check_sold_out
     item = Item.find(params[:item_id])
-    if item.sale == false
+    if item.order != nil
       redirect_to root_path
     end
   end

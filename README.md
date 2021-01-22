@@ -31,7 +31,6 @@
 | duration_id  | integer    | null: false                    |
 |     price    | integer    | null: false                    |
 |      user    | references | null: false, foreign_key: true |
-|      sale    | integer    | null: false,                   |
 
 ### Association
 
