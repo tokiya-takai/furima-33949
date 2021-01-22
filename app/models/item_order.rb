@@ -20,9 +20,6 @@ class ItemOrder
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
     Address.create(postal_code: postal_code, place_id: place_id, city: city, address: address, phone_number: phone_number, order_id: order.id)
-    soldout = Item.find(item_id)
-    soldout.sale = false
-    soldout.save
     return true
   end
 end
