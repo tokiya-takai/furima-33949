@@ -16,6 +16,7 @@ class ItemOrder
     validates :address
     validates :phone_number
   end
+  validates :token, presence: {message: ": Card information is incorrect" }
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
