@@ -6,12 +6,12 @@ class ItemOrder
   VALIDE_PHONE_NUMBER_REGEX = /\A\d{1,11}\z/
   validates :postal_code, format: {with: VALIDE_POSTAL_CODE_REGEX}, allow_blank: true
   validates :phone_number, length: { maximum: 11 },format: {with: VALIDE_PHONE_NUMBER_REGEX}, allow_blank: true
+  validates :place_id, numericality: { other_than: 1 ,message: ": Prefecture is not selected"}
 
   with_options presence: true do
     validates :user_id
     validates :item_id
     validates :postal_code
-    validates :place_id
     validates :city
     validates :address
     validates :phone_number

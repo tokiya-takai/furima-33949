@@ -35,11 +35,6 @@ RSpec.describe ItemOrder, type: :model do
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("Postal code can't be blank")
       end
-      it "place_idがなければ購入できない" do
-        @item_order.place_id = ""
-        @item_order.valid?
-        expect(@item_order.errors.full_messages).to include("Place can't be blank")
-      end
       it "cityがなければ購入できない" do
         @item_order.city = ""
         @item_order.valid?
@@ -59,6 +54,11 @@ RSpec.describe ItemOrder, type: :model do
         @item_order.token = ""
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("Token : Card information is incorrect")
+      end
+      it "place_idが1だた購入できない" do
+        @item_order.place_id = "1"
+        @item_order.valid?
+        expect(@item_order.errors.full_messages).to include("Place : Prefecture is not selected")
       end
 
       it "postal_codeはハイフンが入っていないと購入できない" do
