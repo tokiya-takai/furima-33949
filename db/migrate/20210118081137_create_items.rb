@@ -10,6 +10,7 @@ class CreateItems < ActiveRecord::Migration[6.0]
       t.integer :duration_id, null: false
       t.integer :price,       null: false
       t.references :user,    foreign_key: true
+      t.boolean :sale,        null: false, default: true
       t.timestamps
     end
   end
