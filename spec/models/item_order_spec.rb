@@ -4,7 +4,7 @@ RSpec.describe ItemOrder, type: :model do
   before do
     @user = FactoryBot.create(:user)
     @item = FactoryBot.create(:item)
-    @item_order = FactoryBot.build(:item_order, user_id: @item.user_id, item_id: @user.id)
+    @item_order = FactoryBot.build(:item_order, user_id: @user.id, item_id: @item.id)
     sleep 0.1 #処理過多による負荷軽減
   end
 
