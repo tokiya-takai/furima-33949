@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable
         #  :validatable
   has_many :items
+  has_many :orders
   
   VALID_EMAIL_REGEX = /\A[\w\-\._]+@[\w\-\._]+\.[A-Za-z]+\z/i
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i
@@ -16,7 +17,7 @@ class User < ApplicationRecord
     validates :nickname
 
     #メールアドレスが必須であり、@を含んでおり、重複していないこと
-    validates :email, uniqueness: true
+    validates :email, uniqueness: { case_sensitive: true }
     validates :email, format: { with: VALID_EMAIL_REGEX }, allow_blank: true
 
     #パスワードが必須であり、半角英数字混合の6文字以上であること
