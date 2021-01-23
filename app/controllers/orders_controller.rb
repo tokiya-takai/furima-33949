@@ -1,12 +1,9 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
-  before_action :check_sold_out
+  before_action :can_not_buy?
 
   def index
-    if @item.id == current_user.id
-      redirect_to root_path
-    end
     @item_order = ItemOrder.new
   end
 
@@ -26,17 +23,12 @@ class OrdersController < ApplicationController
     @item= Item.find(params[:item_id])
   end
 
-  def order_params
-    params.permit(:item_id).merge(user_id: current_user.id)
-  end
-
   def item_order_params
     params.require(:item_order).permit(:postal_code,:place_id,:city,:address,:building,:phone_number).merge(user_id: current_user.id, item_id: params[:item_id],token: params[:token])
   end
 
-  def check_sold_out
-    item = Item.find(params[:item_id])
-    if item.order != nil
+  def can_not_buy?
+    if @item.order != nil || @item.id == current_user.id
       redirect_to root_path
     end
   end

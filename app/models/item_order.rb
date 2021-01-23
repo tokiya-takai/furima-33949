@@ -16,6 +16,7 @@ class ItemOrder
     validates :address
     validates :phone_number
   end
+  
   validates :token, presence: {message: ": Card information is incorrect" }
 
   def save

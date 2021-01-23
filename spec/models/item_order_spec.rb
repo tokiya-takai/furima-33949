@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe ItemOrder, type: :model do
   before do
-    @item_order = FactoryBot.build(:item_order)
+    @item = FactoryBot.create(:item)
+    @item_order = FactoryBot.build(:item_order, user_id: @item.user_id, item_id: @item.id)
+    sleep 0.1 #処理過多による負荷軽減
   end
 
   describe "商品の購入" do
@@ -21,12 +23,12 @@ RSpec.describe ItemOrder, type: :model do
     end
     context "商品の購入ができないとき" do
       it "user_idがなければ購入できない" do
-        @item_order.user_id = ""
+        @item_order.user_id = nil
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("User can't be blank")
       end
       it "item_idがなければ購入できない" do
-        @item_order.item_id = ""
+        @item_order.item_id = nil
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("Item can't be blank")
       end
@@ -55,8 +57,8 @@ RSpec.describe ItemOrder, type: :model do
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("Token : Card information is incorrect")
       end
-      it "place_idが1だた購入できない" do
-        @item_order.place_id = "1"
+      it "place_idが1だと購入できない" do
+        @item_order.place_id = 1
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("Place : Prefecture is not selected")
       end
@@ -70,6 +72,16 @@ RSpec.describe ItemOrder, type: :model do
         @item_order.phone_number = "000111222333"
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("Phone number is too long (maximum is 11 characters)")
+      end
+      it "phone_numberは全角では購入できない" do
+        @item_order.phone_number = "０００１１１２２２３３３"
+        @item_order.valid?
+        expect(@item_order.errors.full_messages).to include("Phone number is invalid")
+      end
+      it "phone_numberは半角英数では購入できない" do
+        @item_order.phone_number = "abcd"
+        @item_order.valid?
+        expect(@item_order.errors.full_messages).to include("Phone number is invalid")
       end
     end
   end

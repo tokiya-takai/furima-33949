@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :item_order do
-    user_id           {1}
-    item_id           {1}
+    user_id           {nil}
+    item_id           {nil}
     postal_code       {"100-0014"}
     place_id          {14}
     city              {"千代田区"}

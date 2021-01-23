@@ -17,7 +17,7 @@ class User < ApplicationRecord
     validates :nickname
 
     #メールアドレスが必須であり、@を含んでおり、重複していないこと
-    validates :email, uniqueness: true
+    validates :email, uniqueness: { case_sensitive: true }
     validates :email, format: { with: VALID_EMAIL_REGEX }, allow_blank: true
 
     #パスワードが必須であり、半角英数字混合の6文字以上であること
