@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe ItemOrder, type: :model do
   before do
+    @user = FactoryBot.create(:user)
     @item = FactoryBot.create(:item)
-    @item_order = FactoryBot.build(:item_order, user_id: @item.user_id, item_id: @item.id)
+    @item_order = FactoryBot.build(:item_order, user_id: @item.user_id, item_id: @user.id)
     sleep 0.1 #処理過多による負荷軽減
   end
 

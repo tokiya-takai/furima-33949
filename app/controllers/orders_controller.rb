@@ -28,7 +28,8 @@ class OrdersController < ApplicationController
   end
 
   def can_not_buy?
-    if @item.order != nil || @item.id == current_user.id
+    if @item.order != nil || @item.user_id == current_user.id
+      binding.pry
       redirect_to root_path
     end
   end
